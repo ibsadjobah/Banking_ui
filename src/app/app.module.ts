@@ -17,6 +17,10 @@ import { ManageUsersComponent } from './admin/manage-users/manage-users.componen
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { MainAdminPageComponent } from './admin/main-admin-page/main-admin-page.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { TransactionsService } from './services/services';
+import { HttpIntercepteurService } from './services/http-intercepteur/http-intercepteur.service';
+//import { FirstService } from './services/first.service';
 
 @NgModule({
   declarations: [
@@ -38,9 +42,18 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpIntercepteurService,
+      multi:true
+    },
+    HttpClient
+     //TransactionsService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

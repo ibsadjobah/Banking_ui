@@ -1,20 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { LightInfoInput } from 'src/app/components/light-info/light-info.component';
+import { TransactionsService } from 'src/app/services/services/transactions.service';
+//import { TransactionControllerService } from 'src/app/services/services';
+//import { FirstService } from 'src/app/services/first.service';
 
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss']
 })
-export class UserDashboardComponent implements OnInit {
+export class UserDashboardComponent  {
 
   accountInfoList: Array<LightInfoInput> = []
 
-  constructor() {
+  constructor(
+  private transactionService: TransactionsService  
+  ) {
     this.initializeAccountInfo()
+    
    }
 
   ngOnInit(): void {
+
+    this.transactionService.findAll1()
+    .subscribe({
+      next: (data) => {
+        console.log('Transaction List', data)
+      }
+    })
   }
 
   private initializeAccountInfo(){
